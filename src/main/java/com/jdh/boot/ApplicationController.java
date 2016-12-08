@@ -28,13 +28,11 @@ public class ApplicationController {
         try {
             userService.persistUser(userDto);
 
-            JsonResponse response = new JsonResponse("OK", "");
-            return new Gson().toJson(response);
+            return new Response("OK", "").toJSON();
         } catch (Exception e) {
             e.printStackTrace();
 
-            JsonResponse response = new JsonResponse("ERROR", e.getMessage());
-            return new Gson().toJson(response);
+            return new Response("ERROR", e.getMessage()).toJSON();
         }
     }
 
