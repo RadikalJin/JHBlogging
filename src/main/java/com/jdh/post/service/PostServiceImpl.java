@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Calendar;
 import java.util.List;
 
 @Component(PostServiceImpl.BEAN_NAME)
@@ -38,7 +39,7 @@ public class PostServiceImpl implements PostService {
 		return null;
 	}
 
-/*	@Transactional
+	@Transactional
 	public void persistPost(PostDto postDto) throws Exception {
 		Post postCandidate = PostUtil.convertPostDtoToDomain(postDto);
 		if (! postIsAlreadyPersisted(postCandidate)) {
@@ -62,6 +63,16 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Transactional
+	public List<PostDto> getPostsByUsername(String userName) {
+		return PostUtil.convertPostDomainsToDtos(postDao.getPostsByUserName(userName));
+	}
+
+	@Transactional
+	public List<PostDto> getPostsByBlogName(String blogName) {
+		return PostUtil.convertPostDomainsToDtos(postDao.getPostsByBlogName(blogName));
+	}
+
+	@Transactional
 	public List<PostDto> getPostsByPostTitle(String postName) {
 		return PostUtil.convertPostDomainsToDtos(postDao.getPostsByPostTitle(postName));
 	}
@@ -81,5 +92,5 @@ public class PostServiceImpl implements PostService {
 			}
 		}
 		return matchFound;
-	}*/
+	}
 }

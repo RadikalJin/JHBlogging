@@ -77,7 +77,7 @@ public class User implements java.io.Serializable {
 
 		User user = (User) o;
 
-		if (!id.equals(user.id)) return false;
+		if (id != null ? !id.equals(user.id) : user.id != null) return false;
 		if (username != null ? !username.equals(user.username) : user.username != null) return false;
 		return !(emailAddress != null ? !emailAddress.equals(user.emailAddress) : user.emailAddress != null);
 
@@ -85,7 +85,7 @@ public class User implements java.io.Serializable {
 
 	@Override
 	public int hashCode() {
-		int result = id.hashCode();
+		int result = id != null ? id.hashCode() : 0;
 		result = 31 * result + (username != null ? username.hashCode() : 0);
 		result = 31 * result + (emailAddress != null ? emailAddress.hashCode() : 0);
 		return result;

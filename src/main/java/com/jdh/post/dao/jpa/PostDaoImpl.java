@@ -20,10 +20,11 @@ public class PostDaoImpl implements PostDao {
 	@PersistenceContext
 	private EntityManager em;
 
-/*
-	*//*
+	/*
+	*
 	* HIBERNATE
-	* *//*
+	*
+	* */
 	public void persistPost(Post post) {
 		em.persist(post);
 	}
@@ -36,17 +37,20 @@ public class PostDaoImpl implements PostDao {
 
 	public void updatePost(Post post) {
 		Post existingVersionOfPost = em.find(Post.class, post.getId());
+		existingVersionOfPost.setBlog(post.getBlog());
+		existingVersionOfPost.setUser(post.getUser());
 		existingVersionOfPost.setTitle(post.getTitle());
-		existingVersionOfPost.setDescription(post.getDescription());
-		existingVersionOfPost.setDueDate(post.getDueDate());
+		existingVersionOfPost.setCreatedDate(post.getCreatedDate());
+		existingVersionOfPost.setBannerImageURL(post.getBannerImageURL());
+		existingVersionOfPost.setContent(post.getContent());
 		em.persist(existingVersionOfPost);
-	}*/
+	}
 
 	public List<Post> getAllPersistedPosts() {
 		return em.createQuery("SELECT a FROM Post a", Post.class).getResultList();
 	}
 
-/*	public Post getPostById(Integer postId) {
+	public Post getPostById(Integer postId) {
 		return em.find(Post.class, postId);
 	}
 
@@ -61,9 +65,17 @@ public class PostDaoImpl implements PostDao {
 		em.createQuery("DELETE from Post").executeUpdate();
 	}
 
+	public List<Post> getPostsByBlogName(String blogName) {
+		return em.createQuery("SELECT p FROM Post p JOIN FETCH p.blog WHERE p.blog.blogName = '" + blogName + "'", Post.class).getResultList();
+	}
+
+	public List<Post> getPostsByUserName(String userName) {
+		return em.createQuery("SELECT p FROM Post p JOIN FETCH p.user WHERE p.user.username = '" + userName + "'", Post.class).getResultList();
+	}
+
 	public List<Post> getPostsByPostTitle(String postName) {
 		return em.createQuery("SELECT a FROM Post a WHERE title = '" + postName + "'", Post.class).getResultList();
-	}*/
+	}
 
 }
 
