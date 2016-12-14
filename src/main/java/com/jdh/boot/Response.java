@@ -5,11 +5,11 @@ import com.google.gson.Gson;
 public class Response {
 
     private String status = "";
-    private String errorMessage = "";
+    private String message = "";
 
-    public Response(String status, String errorMessage) {
+    public Response(String status, String message) {
         this.status = status;
-        this.errorMessage = errorMessage;
+        this.message = message;
     }
 
     public String toJSON() {
