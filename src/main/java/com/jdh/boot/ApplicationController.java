@@ -81,6 +81,17 @@ public class ApplicationController {
         }
     }
 
+    @RequestMapping("/blogs")
+    public String getAllBlogs() throws Exception {
+        try {
+            List<BlogDto> persisted = blogService.getAllPersistedBlogs();
+            return new Response("OK", new Gson().toJson(persisted)).toJSON();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Response("ERROR", e.getMessage()).toJSON();
+        }
+    }
+
     /*
     *
     * POST
