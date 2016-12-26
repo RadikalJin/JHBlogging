@@ -24,7 +24,7 @@ public class PostUtil {
             postDto.setUserName(post.getUser().getUsername());
         }
         postDto.setTitle(post.getTitle());
-        postDto.setCreatedDate(post.getCreatedDate());
+        postDto.setCreatedDate(String.valueOf(post.getCreatedDate().getTime().getTime()));
         postDto.setBannerImageURL(post.getBannerImageURL());
         postDto.setContent(post.getContent());
         return postDto;
@@ -55,7 +55,10 @@ public class PostUtil {
         post.setUser(user);
         post.setTitle(postDto.getTitle());
         if (postDto.getCreatedDate() != null) {
-            post.setCreatedDate(postDto.getCreatedDate());
+            Date date = new Date(Long.parseLong(postDto.getCreatedDate()));
+            Calendar createdDate = Calendar.getInstance();
+            createdDate.setTime(date);
+            post.setCreatedDate(createdDate);
         }
         post.setBannerImageURL(postDto.getBannerImageURL());
         post.setContent(postDto.getContent());

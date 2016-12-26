@@ -157,10 +157,10 @@ public class ApplicationController {
         }
     }
 
-    @RequestMapping("/posts/fitness")
-    public String getFitnessPosts() throws Exception {
+    @RequestMapping("/posts/{blogName}")
+    public String getPostsByBlog(@PathVariable String blogName) throws Exception {
         try {
-            List<PostDto> persistedPosts = postService.getPostsByBlogName("fitness");
+            List<PostDto> persistedPosts = postService.getPostsByBlogName(blogName);
             return new Response("OK", new Gson().toJson(persistedPosts)).toJSON();
         } catch (Exception e) {
             e.printStackTrace();

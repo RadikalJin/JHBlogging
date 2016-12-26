@@ -10,7 +10,7 @@ public class PostDto {
     private String userId;
     private String userName;
     private String title;
-    private Calendar createdDate;
+    private String createdDate;
     private String bannerImageURL;
     private String content;
 
@@ -62,11 +62,11 @@ public class PostDto {
         this.title = title;
     }
 
-    public Calendar getCreatedDate() {
+    public String getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Calendar createdDate) {
+    public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
 
