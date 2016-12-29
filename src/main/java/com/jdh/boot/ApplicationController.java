@@ -82,6 +82,7 @@ public class ApplicationController {
     }
 
     @RequestMapping("/blogs")
+    @ResponseBody
     public String getAllBlogs() throws Exception {
         try {
             List<BlogDto> persisted = blogService.getAllPersistedBlogs();
@@ -127,6 +128,21 @@ public class ApplicationController {
         }
     }
 
+    @RequestMapping(value = "/deletePost/{postId}",
+            method = RequestMethod.POST,
+            headers = {"Content-type=application/json"},
+            produces="application/json")
+    @ResponseBody
+    public String deletePost(@PathVariable String postId) throws Exception {
+        try {
+            postService.deletePostById(Integer.parseInt(postId));
+            return new Response("OK", "").toJSON();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Response("ERROR", e.getMessage()).toJSON();
+        }
+    }
+
     @RequestMapping(value = "/getPost",
             method = RequestMethod.POST,
             headers = {"Content-type=application/json"},
@@ -158,6 +174,7 @@ public class ApplicationController {
     }
 
     @RequestMapping("/posts/{blogName}")
+    @ResponseBody
     public String getPostsByBlog(@PathVariable String blogName) throws Exception {
         try {
             List<PostDto> persistedPosts = postService.getPostsByBlogName(blogName);
