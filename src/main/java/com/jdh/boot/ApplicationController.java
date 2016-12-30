@@ -11,6 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -21,6 +22,14 @@ public class ApplicationController {
     PostService postService = (PostService) context.getBean("postService");
     UserService userService = (UserService) context.getBean("userService");
 
+    @RequestMapping(value = "/rest/hello",
+            method = RequestMethod.POST,
+            headers = {"Content-type=application/json"},
+            produces="application/json")
+    @ResponseBody
+    public String hello(Principal principal) {
+        return new Response("OK", "Hello, " + principal.getName()).toJSON();
+    }
 
     /*
     *

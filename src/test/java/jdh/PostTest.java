@@ -27,7 +27,7 @@ public class PostTest {
 /*	@Resource(name = PostServiceImpl.BEAN_NAME)
 	private PostService postService;*/
 
-	@Before
+/*	@Before
 	public void setUp() throws Exception {
 		testPosts = new ArrayList<>();
 		PostDto testPost1 = new PostDto();
@@ -46,7 +46,7 @@ public class PostTest {
 		testPosts.add(testPost2);
 		testPosts.add(testPost3);
 	}
-
+*/
 
 /*	*//*
 	*  PERSISTENCE
