@@ -128,14 +128,14 @@ public class ApplicationController {
         }
     }
 
-    @RequestMapping(value = "/deletePost/{postId}",
+    @RequestMapping(value = "/deletePost",
             method = RequestMethod.POST,
             headers = {"Content-type=application/json"},
             produces="application/json")
     @ResponseBody
-    public String deletePost(@PathVariable String postId) throws Exception {
+    public String deletePost(@RequestBody PostDto postDto) throws Exception {
         try {
-            postService.deletePostById(Integer.parseInt(postId));
+            postService.deletePostById(Integer.parseInt(postDto.getId()));
             return new Response("OK", "").toJSON();
         } catch (Exception e) {
             e.printStackTrace();
