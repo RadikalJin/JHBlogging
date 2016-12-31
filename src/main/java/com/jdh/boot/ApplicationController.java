@@ -23,7 +23,7 @@ public class ApplicationController {
     UserService userService = (UserService) context.getBean("userService");
 
     @RequestMapping(value = "/rest/hello",
-            method = RequestMethod.POST,
+            method = RequestMethod.GET,
             headers = {"Content-type=application/json"},
             produces="application/json")
     @ResponseBody

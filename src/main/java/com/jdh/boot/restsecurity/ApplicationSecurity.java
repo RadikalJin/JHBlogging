@@ -29,7 +29,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/rest/**").authenticated();
         http.csrf().disable();
-        http.addFilterBefore(new SimpleCORSFilter(), ChannelProcessingFilter.class);
+        //http.addFilterBefore(new SimpleCORSFilter(), ChannelProcessingFilter.class);
         http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
         http.formLogin().successHandler(authenticationSuccessHandler);
         http.formLogin().failureHandler(authenticationFailureHandler);
