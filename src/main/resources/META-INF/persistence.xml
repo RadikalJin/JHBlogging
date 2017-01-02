@@ -5,8 +5,9 @@
 
     <persistence-unit name="jpaData" >
         <class>com.jdh.blog.domain.Blog</class>
-        <class>com.jdh.user.domain.User</class>
         <class>com.jdh.post.domain.Post</class>
+        <class>com.jdh.tag.domain.Tag</class>
+        <class>com.jdh.user.domain.User</class>
     </persistence-unit>
 
 </persistence>

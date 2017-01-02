@@ -23,6 +23,9 @@ public class PostUtil {
             postDto.setUserId(String.valueOf(post.getUser().getId()));
             postDto.setUserName(post.getUser().getUsername());
         }
+        if (post.getTags() != null) {
+            postDto.setTags(post.getTags());
+        }
         postDto.setTitle(post.getTitle());
         postDto.setCreatedDate(String.valueOf(post.getCreatedDate().getTime().getTime()));
         postDto.setBannerImageURL(post.getBannerImageURL());
@@ -62,6 +65,7 @@ public class PostUtil {
         }
         post.setBannerImageURL(postDto.getBannerImageURL());
         post.setContent(postDto.getContent());
+        post.setTags(postDto.getTags());
         return post;
     }
 

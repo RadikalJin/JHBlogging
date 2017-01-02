@@ -1,10 +1,12 @@
 package com.jdh.post.domain;
 
 import com.jdh.blog.domain.Blog;
+import com.jdh.tag.domain.Tag;
 import com.jdh.user.domain.User;
 
 import javax.persistence.*;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -37,6 +39,12 @@ public class Post implements java.io.Serializable {
     @Column(name = "CONTENT", nullable = true)
     private String content;
 
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "POST_TAG",
+               joinColumns = @JoinColumn(name = "POST_ID"),
+               inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
+    private Collection<Tag> tags;
+
     @PrePersist
     protected void onCreate() {
         createdDate = new Date();
@@ -46,13 +54,14 @@ public class Post implements java.io.Serializable {
         super();
     }
 
-    public Post(Blog blog, User user, String title, Calendar createdDate, String bannerImageURL, String content) {
+    public Post(Blog blog, User user, String title, Calendar createdDate, String bannerImageURL, String content, Collection<Tag> tags) {
         this.blog = blog;
         this.user = user;
         this.title = title;
         this.createdDate = createdDate.getTime();
         this.bannerImageURL = bannerImageURL;
         this.content = content;
+        this.tags = tags;
     }
 
     public Integer getId() {
@@ -114,6 +123,14 @@ public class Post implements java.io.Serializable {
         this.content = content;
     }
 
+    public Collection<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Collection<Tag> tags) {
+        this.tags = tags;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -122,25 +139,28 @@ public class Post implements java.io.Serializable {
 
         Post post = (Post) o;
 
+        if (id != null ? !id.equals(post.id) : post.id != null) return false;
         if (blog != null ? !blog.equals(post.blog) : post.blog != null) return false;
         if (user != null ? !user.equals(post.user) : post.user != null) return false;
         if (title != null ? !title.equals(post.title) : post.title != null) return false;
         if (createdDate != null ? !createdDate.equals(post.createdDate) : post.createdDate != null) return false;
         if (bannerImageURL != null ? !bannerImageURL.equals(post.bannerImageURL) : post.bannerImageURL != null)
             return false;
-        return !(content != null ? !content.equals(post.content) : post.content != null);
+        if (content != null ? !content.equals(post.content) : post.content != null) return false;
+        return !(tags != null ? !tags.equals(post.tags) : post.tags != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = blog != null ? blog.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (blog != null ? blog.hashCode() : 0);
         result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         result = 31 * result + (bannerImageURL != null ? bannerImageURL.hashCode() : 0);
         result = 31 * result + (content != null ? content.hashCode() : 0);
+        result = 31 * result + (tags != null ? tags.hashCode() : 0);
         return result;
     }
-
 }

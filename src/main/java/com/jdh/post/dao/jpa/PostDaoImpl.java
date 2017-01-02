@@ -43,6 +43,7 @@ public class PostDaoImpl implements PostDao {
 		existingVersionOfPost.setCreatedDate(post.getCreatedDate());
 		existingVersionOfPost.setBannerImageURL(post.getBannerImageURL());
 		existingVersionOfPost.setContent(post.getContent());
+		existingVersionOfPost.setTags(post.getTags());
 		em.persist(existingVersionOfPost);
 	}
 

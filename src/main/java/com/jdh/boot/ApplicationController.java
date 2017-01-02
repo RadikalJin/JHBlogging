@@ -5,6 +5,8 @@ import com.jdh.blog.dto.BlogDto;
 import com.jdh.blog.service.BlogService;
 import com.jdh.post.dto.PostDto;
 import com.jdh.post.service.PostService;
+import com.jdh.tag.dto.TagDto;
+import com.jdh.tag.service.TagService;
 import com.jdh.user.dto.UserDto;
 import com.jdh.user.service.UserService;
 import org.springframework.context.ApplicationContext;
@@ -21,8 +23,9 @@ public class ApplicationController {
     BlogService blogService = (BlogService) context.getBean("blogService");
     PostService postService = (PostService) context.getBean("postService");
     UserService userService = (UserService) context.getBean("userService");
+    TagService tagService = (TagService) context.getBean("tagService");
 
-    @RequestMapping(value = "/rest/hello",
+    @RequestMapping(value = "/hello",
             method = RequestMethod.GET,
             headers = {"Content-type=application/json"},
             produces="application/json")
@@ -188,6 +191,51 @@ public class ApplicationController {
         try {
             List<PostDto> persistedPosts = postService.getPostsByBlogName(blogName);
             return new Response("OK", new Gson().toJson(persistedPosts)).toJSON();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Response("ERROR", e.getMessage()).toJSON();
+        }
+    }
+
+
+    /*
+    *
+    * BLOG
+    *
+    * */
+    @RequestMapping(value = "/createTag",
+            method = RequestMethod.POST,
+            headers = {"Content-type=application/json"},
+            produces="application/json")
+    @ResponseBody
+    public String createTag(@RequestBody TagDto tagDto) {
+        try {
+            tagService.persistTag(tagDto);
+            return new Response("OK", "").toJSON();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Response("ERROR", e.getMessage()).toJSON();
+        }
+    }
+
+    @RequestMapping("/tags")
+    @ResponseBody
+    public String getAllTags() throws Exception {
+        try {
+            List<TagDto> persisted = tagService.getAllPersistedTags();
+            return new Response("OK", new Gson().toJson(persisted)).toJSON();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Response("ERROR", e.getMessage()).toJSON();
+        }
+    }
+
+    @RequestMapping("/blogs/{blogName}/tags")
+    @ResponseBody
+    public String getAllTagsByBlogName(@PathVariable String blogName) throws Exception {
+        try {
+            List<TagDto> persisted = tagService.getTagsByBlogName(blogName);
+            return new Response("OK", new Gson().toJson(persisted)).toJSON();
         } catch (Exception e) {
             e.printStackTrace();
             return new Response("ERROR", e.getMessage()).toJSON();

@@ -1,6 +1,7 @@
 package com.jdh.post.dto;
 
 import java.util.Calendar;
+import java.util.Collection;
 
 public class PostDto {
 
@@ -13,6 +14,7 @@ public class PostDto {
     private String createdDate;
     private String bannerImageURL;
     private String content;
+    private Collection tags;
 
     public String getId() {
         return id;
@@ -84,5 +86,13 @@ public class PostDto {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Collection getTags() {
+        return tags;
+    }
+
+    public void setTags(Collection tags) {
+        this.tags = tags;
     }
 }
