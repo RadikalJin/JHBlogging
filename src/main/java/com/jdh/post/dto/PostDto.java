@@ -1,7 +1,10 @@
 package com.jdh.post.dto;
 
+import com.jdh.tag.dto.TagDto;
+
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.List;
 
 public class PostDto {
 
@@ -14,7 +17,7 @@ public class PostDto {
     private String createdDate;
     private String bannerImageURL;
     private String content;
-    private Collection tags;
+    private List<TagDto> tags;
 
     public String getId() {
         return id;
@@ -88,11 +91,11 @@ public class PostDto {
         this.content = content;
     }
 
-    public Collection getTags() {
+    public List<TagDto> getTags() {
         return tags;
     }
 
-    public void setTags(Collection tags) {
+    public void setTags(List<TagDto> tags) {
         this.tags = tags;
     }
 }

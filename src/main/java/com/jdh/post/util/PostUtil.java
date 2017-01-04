@@ -4,7 +4,11 @@ import com.jdh.blog.domain.Blog;
 import com.jdh.blog.util.BlogUtil;
 import com.jdh.post.domain.Post;
 import com.jdh.post.dto.PostDto;
+import com.jdh.tag.domain.Tag;
+import com.jdh.tag.dto.TagDto;
+import com.jdh.tag.util.TagUtil;
 import com.jdh.user.domain.User;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
@@ -24,7 +28,8 @@ public class PostUtil {
             postDto.setUserName(post.getUser().getUsername());
         }
         if (post.getTags() != null) {
-            postDto.setTags(post.getTags());
+            List<TagDto> tags = TagUtil.convertTagDomainsToDtos((List<Tag>) post.getTags());
+            postDto.setTags(tags);
         }
         postDto.setTitle(post.getTitle());
         postDto.setCreatedDate(String.valueOf(post.getCreatedDate().getTime().getTime()));
@@ -65,7 +70,9 @@ public class PostUtil {
         }
         post.setBannerImageURL(postDto.getBannerImageURL());
         post.setContent(postDto.getContent());
-        post.setTags(postDto.getTags());
+        if (! CollectionUtils.isEmpty(postDto.getTags())) {
+            post.setTags(TagUtil.convertTagDtosToDomains(postDto.getTags()));
+        }
         return post;
     }
 

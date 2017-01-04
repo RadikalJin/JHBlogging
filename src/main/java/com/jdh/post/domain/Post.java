@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "POST")
@@ -39,11 +40,14 @@ public class Post implements java.io.Serializable {
     @Column(name = "CONTENT", nullable = true)
     private String content;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "POST_TAG",
-               joinColumns = @JoinColumn(name = "POST_ID"),
-               inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
-    private Collection<Tag> tags;
+            joinColumns =
+                    { @JoinColumn(name = "POST_ID", referencedColumnName = "POST_ID") },
+            inverseJoinColumns =
+                    { @JoinColumn(name = "TAG_ID", referencedColumnName = "TAG_ID")}
+    )
+    private List<Tag> tags;
 
     @PrePersist
     protected void onCreate() {
@@ -54,7 +58,7 @@ public class Post implements java.io.Serializable {
         super();
     }
 
-    public Post(Blog blog, User user, String title, Calendar createdDate, String bannerImageURL, String content, Collection<Tag> tags) {
+    public Post(Blog blog, User user, String title, Calendar createdDate, String bannerImageURL, String content, List<Tag> tags) {
         this.blog = blog;
         this.user = user;
         this.title = title;
@@ -123,11 +127,11 @@ public class Post implements java.io.Serializable {
         this.content = content;
     }
 
-    public Collection<Tag> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(Collection<Tag> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 
