@@ -11,7 +11,7 @@ public class Tag implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "TAG_NAME", nullable = true)
+    @Column(name = "TAG_NAME", nullable = false, unique = true)
     private String tagName;
 
 
@@ -46,12 +46,12 @@ public class Tag implements java.io.Serializable {
 
         Tag tag = (Tag) o;
 
-        return id.equals(tag.id);
+        return !(tagName != null ? !tagName.equals(tag.tagName) : tag.tagName != null);
 
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return tagName != null ? tagName.hashCode() : 0;
     }
 }

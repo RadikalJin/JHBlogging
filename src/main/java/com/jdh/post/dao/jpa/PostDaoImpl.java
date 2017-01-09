@@ -31,7 +31,7 @@ public class PostDaoImpl implements PostDao {
 
 	public void persistPosts(List<Post> posts) {
 		for (Post post : posts) {
-			em.persist(post);
+			persistPost(post);
 		}
 	}
 
@@ -44,7 +44,7 @@ public class PostDaoImpl implements PostDao {
 		existingVersionOfPost.setBannerImageURL(post.getBannerImageURL());
 		existingVersionOfPost.setContent(post.getContent());
 		existingVersionOfPost.setTags(post.getTags());
-		em.persist(existingVersionOfPost);
+		em.merge(existingVersionOfPost);
 	}
 
 	public List<Post> getAllPersistedPosts() {

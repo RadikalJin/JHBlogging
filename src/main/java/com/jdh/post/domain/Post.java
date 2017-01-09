@@ -40,7 +40,7 @@ public class Post implements java.io.Serializable {
     @Column(name = "CONTENT", nullable = true)
     private String content;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
     @JoinTable(name = "POST_TAG",
             joinColumns =
                     { @JoinColumn(name = "POST_ID", referencedColumnName = "POST_ID") },
@@ -132,7 +132,12 @@ public class Post implements java.io.Serializable {
     }
 
     public void setTags(List<Tag> tags) {
-        this.tags = tags;
+        if (this.tags == null) {
+            this.tags = tags;
+        } else {
+            this.tags.clear();
+            this.tags.addAll(tags);
+        }
     }
 
 
